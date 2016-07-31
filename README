@@ -1,0 +1,138 @@
+Daniela Elena Ene
+326CC
+
+Paradigme de programare
+TEMA 1
+
+Pentru structura arborelui am ales reprezentarea folosind
+liste imbricate de forma:
+'(element-radacina subarbore-stang subarbore-drept)
+Frunzele sunt reprezentate de forma:
+'(element '() '())
+
+Task 0:
+	1. Functia init-node creaza un nod, de forma unei frunze folosind
+functia make-node.
+	2. Functia make-node construieste un nod, adica o lista ce contine
+pe prima pozitie radacina, pe a doua, valoarea din stanga, iar pe
+a treia, valoarea din dreapta
+	3. Functia is-leaf? verifica daca atat partea dreapta, cat si cea 
+stanga sunt nule.
+	4. Functia get-value intoarce elementul de pe prima pozitie a listei
+data ca parametru.
+	5. Functia get-left intoarce elementul de pe a doua pozitie a listei
+data ca parametru.
+	6. Functia get-right intoarce elementul de pe a treia pozitie a listei
+data ca parametru.
+	7. Functia is-node? introarce true daca nodul este null, false in
+caz contrar.
+	8. Functia is-empty? introarce true daca arborele este null, false
+in caz contrar.
+	9. Functia has-left? intoarce false daca get-left este null, true
+in caz contrar.
+	10. Functia has-right? intoarce false daca get-right este null, true
+in caz contrar.
+	11. Functia minimum parcurge recursiv arborele pe partea stanga
+pana se ajunge la o frunza si se intoarce valoarea acesteia.
+	12. Functia maximum parcurge recursiv arborele pe partea dreapta
+pana se ajunge la o frunza si se intoarce valoarea acesteia.
+	13. Functia height parcurge arborele prin 2 apeluri recursive, pe
+partea dreapta si pe partea stanga, de fiecare data alegandu-se maximul.
+	14. Functia inorder parcurge recursiv arborele pe partea stanga
+si returneaza intr-un acumulator nodurile.
+	Pentru functiile successor si predecessor am folosit o functie 
+auxiliara de cautare a unui element din arbore
+	15. Functia successor porneste de la valoarea data ca parametru si 
+incrementeaza succesiv cu 1, cautand noua valoare in arbore. Apelul
+recursiv se incheie cand valoarea este gasita.
+	16. Functia predecessor porneste de la valoarea data ca parametru 
+si decrementeaza succesiv cu 1, cautand noua valoare in arbore. 
+Apelul recursiv se incheie cand valoarea este gasita.
+
+Task 1:
+
+1. Functia insert trateaza 4 cazuri posibile:
+	- arborele este vid, caz in care se initializeaza un nod nou
+	- elementul exista in arbore, caz in care arborele ramane 
+	neschimbat
+	- elementul este mai mic decat radacina, caz in care se apeleaza
+recursiv functia de insert pentru partea stanga
+	- elementul este mai mare decat radacina, caz in care se 
+apeleaza recursiv functia de insert pentru partea dreapta
+
+2. Functia union insereaza fiecare element din tree2 in tree1, 
+folosind functia insert care nu insereaza duplicate. Elementele 
+sunt inserate doar daca nu exista deja in tree1.
+
+3. Functia intersection cauta fiecare element din tree2 in tree1.
+Daca se gaseste elementul, se insereaza si se apeleaza recursiv 
+functia pentru tree1 (arborele in care se cauta) si tree2(arborele
+ale caruie elemente se cauta) format prin eliminarea elementelor 
+deja cautate. Aceasta eliminare nu este una propriu-zisa, ci la 
+fiecare apel se reconstruieste tree2 prin reuniunea subarborelui
+stang cu cel drept, adica eliminarea radacinii.
+Daca elementul nu este gasit, se apeleaza functia fara insert.
+
+4. Functia complements foloseste o functie care implementeaza
+aceeasi logica ca si intersection, doar ca se neaga conditia din if.
+Din functia principala se apeleaza aceasta functie auxiliara pentru 
+tree1 si intersectia dintre tree1 si tree2. In principiu, se 
+contruieste un arbore care nu contine elementele din intersectia 
+lui cu un alt arbore.
+
+5. Functia contains apleaza functia de cautare definita la taskul 0.
+
+6. Functia remove trateaza urmatoarele cazuri:
+	- daca nodul este frunza se elimina direct
+	- daca nodul este radacina unui arbore doar cu componenta 
+	dreapta, intorc partea lui dreapta
+	- daca nodul este radacina unui arbore doar cu componenta
+	stanga, intorc partea lui stanga
+	- daca nodul are ambele parti, refac arborele din partea
+	lui stanga si dreapta folosind functia union
+Pentru a ajunge la nodul ce se vrea sters, se apeleaza recursiv pe
+partea stanga si pe partea dreapta.
+
+7. Functia balance foloseste 2 rotiri: spre dreapta si spre stanga.
+Verific diferenta dintre inaltimea subarborelui drept si stang.
+Daca diferente este -1, 0 sau 1, arborele este echilibrat. In caz
+contrar se apeleaza corespunzator spre stanga sau spre dreapta.
+Functia echilibreaza arborele doar daca diferenta este de 2, ea 
+trebuie apelata la fiecare insert.
+
+Task 2:
+
+1. Functia k-subsets construieste combinari de k elemente dintr-o 
+lista. Se fixeaza primul element din lista si se apeleaza recursiv
+functia pentru restul elementelor. Se construiesc listele prin 
+parcurgerea listelor intoarse se apelul recursiv la care se 
+apendeaza elementul fixat.
+
+2. Pentru a determina submultimile zig-zag, se genereaza toate
+permutarile posibil si folosind functionala filter se selecteaza
+doar cele care ai forma de zig-zag.
+
+BONUS:
+
+Pentru a parsa expresia se folosesc doua liste, de operatori si 
+operanzi, care joaca rolul unor stive in care introducem pe parcurs
+ce parcurgem expresia si din care scoatem pentru a contrui
+arborele.
+Se parcurge expresia si distribuim operatorii si operanzii in liste
+Daca noul operator are o prioritate mai mica decat cel care este
+deja in lisa, se scot din liste operanzii si operatorii si se 
+construieste un nod. Daca prioritatea este mai mare, nu putem 
+construii nodul inca si continuam parcurgerea expresiei. Pentru
+a pastra evaluarea de la stang la dreapta, daca ajungem sa comparam
+2 operatori cu aceasi prioritate, evaluam mai intai ce exista deja 
+in lista. Functia se apeleaza pana expresia devine null.
+Functia find-operator transforma simbolurile + - * / in functiile
+asociate.
+
+Referințe:
+1. http://stackoverflow.com/
+2. https://www.cs.berkeley.edu/~bh/ssch18/trees.html
+3. https://lists.racket-lang.org/users/archive/2005-June/009010.html
+4. http://yazary.blogspot.ro/2012/02/binary-search-tree-in-scheme_22.html
+5. Pseudocoduri operatii cu arbori binari de cautare curs de Structuri de Date
+6. http://elf.cs.pub.ro/pp/_media/16/cursuri/andrei/pp.04.racket-various.rkt
